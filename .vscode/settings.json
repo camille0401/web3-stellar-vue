@@ -1,0 +1,24 @@
+{
+    "i18n-ally.localesPaths": [
+        "src/i18n"
+    ],
+    "i18n-ally.enabledParsers": ["json", "yaml"],  // 可编辑文件格式（JSON/YAML支持读写注释）
+    "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",  // 文件路径匹配规则（支持命名空间）
+
+    // 翻译核心设置
+    "i18n-ally.sourceLanguage": "zh-CN",  // 源语言（翻译基准）
+    "i18n-ally.translate.engines": ["google-cn", "deepl"],  // 翻译引擎（顺序优先）
+    "i18n-ally.keepFulfilled": true,  // 自动填充空字符串避免字段缺失
+    
+    // 键名结构与显示优化
+    "i18n-ally.keystyle": "nested",  // 键名风格（nested嵌套 / flat平铺）
+    "i18n-ally.displayLanguage": "zh-CN",  // 代码内联提示的显示语言
+    "i18n-ally.sortKeys": true,  // 保存时按键名排序（仅JSON/YAML有效）
+    
+    // 框架适配与扩展
+    "i18n-ally.enabledFrameworks": ["vue"],  // 手动指定适配框架（如Vue/React）
+    "i18n-ally.namespace": true,  // 文件名映射为命名空间（如en/common.json → $t('common.key')）
+    "i18n-ally.readonly": false  // 关闭只读模式以启用编辑
+}
+
+  
