@@ -7,12 +7,12 @@
 
         <!-- 1st block -->
         <div class="sm:col-span-12 lg:col-span-12 order-1 lg:order-none">
-          <div class="h-full flex flex-row sm:flex-row lg:flex-row justify-between">
+          <div class="h-full flex flex-row sm:flex-row lg:flex-row justify-between flex-wrap">
             <div class="mb-4 sm:mb-0 flex flex-row sm:flex-row lg:flex-row items-center">
               <div class="mr-2">
                 <!-- Logo -->
-                <router-link class="inline-flex" to="/" aria-label="Cruip">
-                  <img src="../images/logo.png" width="80" height="80" alt="Stellar">
+                <router-link class="relative" to="/" aria-label="Cruip" style="top:2px;">
+                  <img src="../images/logo.png" width="80" alt="Stellar">
                 </router-link>
               </div>
               <div class="text-sm text-slate-300">&copy; {{ $t("global.footer_copy_text1") }}
@@ -20,8 +20,8 @@
               </div>
             </div>
             <!-- Social links -->
-            <ul class="flex">
-              <li>
+            <ul class="flex items-center">
+              <li class="flex justify-center items-center">
                 <a class="flex justify-center items-center text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out"
                   href="#0" aria-label="Twitter">
                   <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
                   </svg>
                 </a>
               </li>
-              <li class="ml-2">
+              <li class="flex justify-center items-center ml-2">
                 <a class="flex justify-center items-center text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out"
                   href="#0" aria-label="Dev.to">
                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
@@ -39,7 +39,7 @@
                   </svg>
                 </a>
               </li>
-              <li class="ml-2">
+              <li class="flex justify-center items-center ml-2">
                 <a class="flex justify-center items-center text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out"
                   href="#0" aria-label="Github">
                   <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

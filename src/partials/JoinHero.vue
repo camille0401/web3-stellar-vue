@@ -29,17 +29,8 @@
             <div style="margin-top: 80px;">
               <Stats />
             </div>
-            <div style="margin-top: 80px;"
-              class="max-w-xs mx-auto sm:max-w-none sm:inline-flex sm:justify-center space-y-4 sm:space-y-0 sm:space-x-4"
-              data-aos="fade-down" data-aos-delay="400">
-              <div>
-                <router-link
-                  class="btn text-slate-900 bg-linear-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group"
-                  to="/joinus">
-                  Connect Wallet <span
-                    class="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
-                </router-link>
-              </div>
+            <div class="max-w-6xl mx-auto px-4 sm:px-6" style="margin-top: 100px;">
+              <HTAIProgress />
             </div>
           </div>
         </div>
@@ -52,15 +43,9 @@
   </section>
 </template>
 
-<script>
+<script setup name="JoinHero">
 import Particles from './Particles.vue'
 import Stats from './Stats.vue'
+import HTAIProgress from './HTAIProgress.vue';
 
-export default {
-  name: 'JoinHero',
-  components: {
-    Particles,
-    Stats
-  },
-}
 </script>
