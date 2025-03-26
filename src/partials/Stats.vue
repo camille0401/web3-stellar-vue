@@ -4,24 +4,28 @@ import Counter from './Counter.vue'
 
 const stats = ref([
   {
-    number: 476,
-    suffix: 'K',
-    text: 'Assets packed with power beyond your imagination.',
+    number: 5,
+    suffix: 'M',
+    text: 'join.module1',
+    preffix: '$',
   },
   {
-    number: 1.44,
-    suffix: 'K',
-    text: 'Assets packed with power beyond your imagination.',
+    number: 0,
+    suffix: '',
+    text: 'join.module2',
+    preffix: '$',
   },
   {
-    number: 1.5,
-    suffix: 'M+',
-    text: 'Assets packed with power beyond your imagination.',
+    number: 0,
+    suffix: '',
+    text: 'join.module3',
+    preffix: '',
   },
   {
-    number: 192,
-    suffix: 'K',
-    text: 'Assets packed with power beyond your imagination.',
+    number: 0,
+    suffix: '',
+    text: 'join.module4',
+    preffix: '$',
   },
 ])
 </script>
@@ -36,9 +40,9 @@ const stats = ref([
           <div
             class="relative text-center md:px-5 after:hidden md:after:block after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-px after:h-8 after:border-l after:border-zinc-300 after:border-dashed last:after:hidden">
             <h4 class="font-inter-tight text-2xl md:text-3xl font-bold tabular-nums mb-2">
-              <Counter :number="stat.number" />{{ stat.suffix }}
+              {{ stat.preffix }} <Counter :number="stat.number" /> {{ stat.suffix }}
             </h4>
-            <p class="text-sm text-zinc-500">{{ stat.text }}</p>
+            <p class="text-sm text-zinc-500">{{ $t(stat.text) }}</p>
           </div>
         </template>
 

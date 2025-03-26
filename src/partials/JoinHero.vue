@@ -22,10 +22,10 @@
           <div class="text-center pb-12 md:pb-20">
             <div
               class="inline-flex font-medium bg-clip-text text-transparent bg-linear-to-r from-purple-500 to-purple-200 pb-3">
-              HeaTrace AI's public fundraising</div>
+              {{$t("join.title1")}}</div>
             <h1
               class="h1 bg-clip-text text-transparent bg-linear-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">
-              Initial Public Offering</h1>
+              {{$t("join.title2")}}</h1>
             <div style="margin-top: 80px;">
               <Stats />
             </div>

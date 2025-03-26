@@ -5,7 +5,7 @@
                 <span class="font-medium text-zinc-500">Total Minted</span>
                 <div>
                     <span class="font-medium text-slate-300">{{ percentage }}%</span>
-                    <span class="font-medium text-zinc-500">&nbsp;({{ percentage }} / 10000)</span>
+                    <span class="font-medium text-zinc-500">&nbsp;({{ percentage }} / 5000000)</span>
                 </div>
             </div>
             <div class="htaiprogress">
@@ -13,12 +13,12 @@
             </div>
         </div>
         <div class="htaiprogress-aside">
-            <a class="btn text-slate-900 bg-linear-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group"
-                href="javascript:void(0);">
-                SOON
+            <button class="btn text-slate-900 bg-linear-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group"
+            disabled>
+                {{ $t("join.button") }}
                 <span
                     class="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
-            </a>
+            </button>
         </div>
     </div>
 </template>

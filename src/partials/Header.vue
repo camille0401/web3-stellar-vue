@@ -134,7 +134,7 @@
         relative before:absolute before:inset-0 before:bg-slate-800/30 before:rounded-full before:pointer-events-none cursor-pointer"
               @click="connectWallet">
               <span class="relative inline-flex items-center">
-                Connect Wallet
+                {{ $t("global.connect") }}
                 <span
                   class="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
               </span>

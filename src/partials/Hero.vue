@@ -30,7 +30,7 @@
               <router-link
                 class="btn text-slate-900 bg-linear-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group"
                 to="/joinus">
-                Join Us <span
+                {{ $t("home.join") }} <span
                   class="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
               </router-link>
             </div>
