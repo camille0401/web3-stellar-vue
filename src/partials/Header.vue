@@ -7,7 +7,8 @@
         <div class="flex-1">
           <!-- Logo -->
           <router-link class="inline-flex" to="/" aria-label="Cruip">
-            <img class="max-w-none" style="margin-top: 20px;" src="../images/logo.png" width="200" height="200" alt="Stellar">
+            <img class="max-w-none" style="margin-top: 20px;" src="../images/logo.png" width="200" height="200"
+              alt="Stellar">
           </router-link>
         </div>
 
@@ -78,54 +79,71 @@
               </li>
             </ul>
           </nav>
-          <div class="web-dropdown international-dropdown">
-            <a href="javascript:;"
-              class="dropdown-btn font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="mr-1">
-                <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
-                  stroke-width="2">
-                  <path
-                    d="M8 14.667c1.34 0 2.425-2.985 2.425-6.667S9.339 1.333 8 1.333 5.576 4.318 5.576 8 6.662 14.667 8 14.667M1.637 6.182h12.727M1.637 9.818h12.727">
-                  </path>
-                  <path d="M8 14.667A6.667 6.667 0 1 0 8 1.333a6.667 6.667 0 0 0 0 13.334"></path>
-                </g>
-              </svg>
-              {{ lang }}
-            </a>
-            <div
-              class="dropdown-content border border-transparent [background:linear-gradient(var(--color-slate-900),var(--color-slate-900))_padding-box,conic-gradient(var(--color-slate-400),var(--color-slate-700)_25%,var(--color-slate-700)_75%,var(--color-slate-400)_100%)_border-box] rounded-lg px-4 py-1.5">
-
-              <a href="javascript:;"
-                class="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out"
-                @click="langHandler('en')">English</a>
-              <a href="javascript:;"
-                class="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out"
-                @click="langHandler('zhCN')">简体中文</a>
-            </div>
-          </div>
         </div>
 
 
         <!-- Desktop sign in links -->
         <ul class="flex-1 flex justify-end items-center">
-          <li class="ml-6">
-            <span v-if="walletAddress"
-              class="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out w-full group 
+          <li class="flex items-center">
+            <div class="web-dropdown international-dropdown">
+              <a href="javascript:;"
+                class="dropdown-btn font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="mr-1">
+                  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                    stroke-width="2">
+                    <path
+                      d="M8 14.667c1.34 0 2.425-2.985 2.425-6.667S9.339 1.333 8 1.333 5.576 4.318 5.576 8 6.662 14.667 8 14.667M1.637 6.182h12.727M1.637 9.818h12.727">
+                    </path>
+                    <path d="M8 14.667A6.667 6.667 0 1 0 8 1.333a6.667 6.667 0 0 0 0 13.334"></path>
+                  </g>
+                </svg>
+                {{ lang }}
+              </a>
+              <div
+                class="dropdown-content border border-transparent [background:linear-gradient(var(--color-slate-900),var(--color-slate-900))_padding-box,conic-gradient(var(--color-slate-400),var(--color-slate-700)_25%,var(--color-slate-700)_75%,var(--color-slate-400)_100%)_border-box] rounded-lg px-4 py-1.5">
+                <a href="javascript:;"
+                  class="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out"
+                  @click="langHandler('en')">English</a>
+                <a href="javascript:;"
+                  class="font-medium text-sm text-slate-300 hover:text-white mx-4 lg:mx-5 transition duration-150 ease-in-out"
+                  @click="langHandler('zhCN')">简体中文</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div v-if="walletAddress" class="web-dropdown walletAddress-dropdown">
+              <a
+                class="dropdown-btn btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out w-full group 
         [background:linear-gradient(var(--color-slate-900),var(--color-slate-900))_padding-box,
         conic-gradient(var(--color-slate-400),var(--color-slate-700)_25%,var(--color-slate-700)_75%,
         var(--color-slate-400)_100%)_border-box] 
         relative before:absolute before:inset-0 before:bg-slate-800/30 before:rounded-full before:pointer-events-none cursor-pointer">
-              <span class="relative inline-flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="mr-2">
                   <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
                     stroke-width="2">
                     <circle cx="8" cy="4" r="3"></circle>
                     <path d="M1 14c0-4.5 3.5-6 7-6s7 1.5 7 6"></path>
                   </g>
                 </svg>
-                {{ walletAddress }}
-              </span>
-            </span>
+                <span class="mr-2">{{ walletAddress }}</span>
+                <span
+                  class="material-symbols-outlined tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out">
+                  stat_minus_1
+                </span>
+              </a>
+              <div
+                class="dropdown-content border border-transparent [background:linear-gradient(var(--color-slate-900),var(--color-slate-900))_padding-box,conic-gradient(var(--color-slate-400),var(--color-slate-700)_25%,var(--color-slate-700)_75%,var(--color-slate-400)_100%)_border-box] rounded-lg px-4 py-1.5">
+                <a href="javascript:;"
+                  class="flex items-center justify-between font-medium text-sm text-slate-300 hover:text-white transition duration-150 ease-in-out">
+                  <span class="mr-4">{{ $t("global.wallet_disconnect") }}</span>
+                  <span
+                    class="material-symbols-outlined tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out"
+                    style="font-size: 20px;">
+                    logout
+                  </span>
+                </a>
+              </div>
+            </div>
             <a v-else
               class="btn-sm text-slate-300 hover:text-white transition duration-150 ease-in-out w-full group 
         [background:linear-gradient(var(--color-slate-900),var(--color-slate-900))_padding-box,
@@ -309,13 +327,24 @@ export default {
   display: none;
   min-width: 130px;
   padding: 10px;
+  transition: all 0.5s ease-in-out;
 }
 
-.international-dropdown:hover .dropdown-content {
+.web-dropdown.international-dropdown:hover .dropdown-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.web-dropdown.community-dropdown:hover .dropdown-content {
   display: block;
 }
 
-.community-dropdown:hover .dropdown-content {
-  display: block;
+.web-dropdown.walletAddress-dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  width: 100%;
 }
 </style>

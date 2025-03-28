@@ -27,6 +27,7 @@
   "footer_list04_item02": "Terms & Conditions",
   "footer_list04_item03": "Privacy policy",
   "footer_list04_item04": "Brand Kit",
-  "whitepaper":"/doc/HealTraceAI-Whitepaper.pdf",
-  "connect":"Connect Wallet"
+  "whitepaper": "/doc/HealTraceAI-Whitepaper.pdf",
+  "connect": "Connect Wallet",
+  "wallet_disconnect": "Disconnect"
 }
