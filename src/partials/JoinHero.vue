@@ -22,20 +22,77 @@
           <div class="text-center pb-12 md:pb-20">
             <div
               class="inline-flex font-medium bg-clip-text text-transparent bg-linear-to-r from-purple-500 to-purple-200 pb-3">
-              {{$t("join.title1")}}</div>
+              {{ $t("join.title1") }}</div>
             <h1
               class="h1 bg-clip-text text-transparent bg-linear-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">
-              {{$t("join.title2")}}</h1>
+              {{ $t("join.title2") }}</h1>
             <div style="margin-top: 80px;">
               <Stats />
             </div>
-            <div class="max-w-6xl mx-auto px-4 sm:px-6" style="margin-top: 100px;">
-              <HTAIProgress />
+
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+              <div class="pt-16 md:pt-32">
+                <div class="relative pb-12 md:pb-20">
+                  <Highlighter class="grid md:grid-cols-12 gap-6 group">
+                    <!-- Box #2 -->
+                    <div class="md:col-span-7" data-aos="fade-down">
+                      <HighlighterItem>
+                        <div class="relative h-full bg-slate-900 rounded-[inherit] z-20 overflow-hidden">
+                          <div class="flex flex-col">
+
+                            <!-- Text -->
+                            <div class="md:max-w-[480px] shrink-0 order-1 md:order-none p-6 pt-0 md:p-8">
+                              <div>
+                                <p class="text-slate-400">募集资金5M，Healtrace AI只接收以下5条链上的USDT进行存款，单次最小支付金额为100USDT，没有上线。
+                                </p>
+                              </div>
+                            </div>
+                            <!-- Image -->
+                            <div class="relative w-full h-64 md:h-auto overflow-hidden md:pb-8">
+                              <div class="max-w-6xl mx-auto px-4 sm:px-6" style="margin-top: 100px;">
+                                <HTAIProgress />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </HighlighterItem>
+                    </div>
+                    <!-- Box #3 -->
+                    <div class="md:col-span-5" data-aos="fade-down">
+                      <HighlighterItem>
+                        <div class="relative h-full bg-slate-900 rounded-[inherit] z-20 overflow-hidden">
+                          <div class="flex flex-col">
+                            <form>
+                              <div class="flex flex-wrap items-center gap-4">
+                                <div class="flex-1 min-w-[200px]">
+                                  <label for="company">Company</label>
+                                  <select id="company" class="form-input w-full">
+                                    <option>Ethereum</option>
+                                    <option>Base</option>
+                                    <option>Bsc</option>
+                                    <option>Arb</option>
+                                    <option>Op</option>
+                                  </select>
+                                </div>
+                                <!-- 其他表单元素 -->
+                                <div class="flex-1 min-w-[200px]">
+                                  <label for="other-field">Other Field</label>
+                                  <input id="other-field" type="text" class="form-input w-full"
+                                    placeholder="Other field">
+                                </div>
+                              </div>
+                            </form>
+
+                          </div>
+                        </div>
+                      </HighlighterItem>
+                    </div>
+                  </Highlighter>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
 
@@ -46,6 +103,19 @@
 <script setup name="JoinHero">
 import Particles from './Particles.vue'
 import Stats from './Stats.vue'
-import HTAIProgress from './HTAIProgress.vue';
+import HTAIProgress from './HTAIProgress.vue'
+import Highlighter from './Highlighter.vue'
+import HighlighterItem from './HighlighterItem.vue'
+
+// export default {
+//   name: 'JoinHero',
+//   components: {
+//     Particles,
+//     Stats,
+//     HTAIProgress,
+//     Highlighter,
+//     HighlighterItem
+//   },  
+// }
 
 </script>
