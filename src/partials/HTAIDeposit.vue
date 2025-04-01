@@ -27,7 +27,7 @@
             </div>
             <div class="text-zinc-500">
                 <span>Balance: </span>
-                <span>0.0101004</span>
+                <span>{{ balance }}</span>
             </div>
         </div>
         <div class="form p-3 rounded-md bg-slate-800">
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <button class="button w-full p-2 rounded-md bg-purple-500 cursor-pointer">deposit</button>
+        <button class="button w-full p-2 rounded-md bg-purple-500 cursor-pointer" @click="onDeposit">deposit</button>
     </div>
 </template>
 
@@ -74,8 +74,8 @@ const onSelectNet = (ind) => {
     selectNet.value = netList[ind];
     showNetList.value = false;
 }
-
-const inputValue = ref()
+const balance = ref("10")
+const inputValue = ref('0')
 const handleInput = (event) => {
     const value = event.target.value
     console.log(value)
@@ -95,18 +95,17 @@ const handleInput = (event) => {
 }
 
 const onSelectCount = (percentage) => {
-    // const decimal = new Big(percentage).div(100).toString();
-    // console.log(decimal)
-    // console.log(new Big(100))
-    // inputValue.value = Big(100).mul(decimal).dp(2)
-
-    console.log(inputValue.value)
+    const per = new Big(percentage).div(100);
+    const value = new Big(balance.value).times(per).toString();
+    console.log(value)
+    inputValue.value = value;
 }
 
 const onDeposit = () => {
     if (!inputValue.value) {
         return false;
     }
+
 
 }
 
