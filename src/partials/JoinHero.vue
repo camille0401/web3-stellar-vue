@@ -1,5 +1,5 @@
 <template>
-  <section class="relative">
+  <section class="relative htai-deposit-page">
     <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
       <!-- Radial gradient -->
       <div
@@ -26,7 +26,7 @@
             <h1
               class="h1 bg-clip-text text-transparent bg-linear-to-r from-slate-200/60 via-slate-200 to-slate-200/60 pb-4">
               {{ $t("join.title2") }}</h1>
-            <div style="margin-top: 80px;">
+            <div class="mt-30">
               <Stats />
             </div>
 
@@ -36,8 +36,8 @@
                   <Highlighter class="grid md:grid-cols-12 gap-6 group">
                     <!-- Box #2 -->
                     <div class="md:col-span-7" data-aos="fade-down">
-                      <HighlighterItem>
-                        <div class="relative h-full bg-slate-900 rounded-[inherit] z-20 overflow-hidden">
+                      <HighlighterItem :overflowHidden="false">
+                        <div class="relative h-full bg-slate-900 rounded-[inherit] z-20">
                           <div class="flex flex-col">
 
                             <!-- Text -->
@@ -48,7 +48,7 @@
                               </div>
                             </div>
                             <!-- Image -->
-                            <div class="relative w-full h-64 md:h-auto overflow-hidden md:pb-8">
+                            <div class="relative w-full h-64 md:h-auto md:pb-8">
                               <div class="max-w-6xl mx-auto px-4 sm:px-6" style="margin-top: 100px;">
                                 <HTAIProgress />
                               </div>
@@ -59,31 +59,9 @@
                     </div>
                     <!-- Box #3 -->
                     <div class="md:col-span-5" data-aos="fade-down">
-                      <HighlighterItem>
-                        <div class="relative h-full bg-slate-900 rounded-[inherit] z-20 overflow-hidden">
-                          <div class="flex flex-col">
-                            <form>
-                              <div class="flex flex-wrap items-center gap-4">
-                                <div class="flex-1 min-w-[200px]">
-                                  <label for="company">Company</label>
-                                  <select id="company" class="form-input w-full">
-                                    <option>Ethereum</option>
-                                    <option>Base</option>
-                                    <option>Bsc</option>
-                                    <option>Arb</option>
-                                    <option>Op</option>
-                                  </select>
-                                </div>
-                                <!-- 其他表单元素 -->
-                                <div class="flex-1 min-w-[200px]">
-                                  <label for="other-field">Other Field</label>
-                                  <input id="other-field" type="text" class="form-input w-full"
-                                    placeholder="Other field">
-                                </div>
-                              </div>
-                            </form>
-
-                          </div>
+                      <HighlighterItem :overflowHidden="false">
+                        <div class="relative h-full bg-slate-900 rounded-[inherit] z-20 p-5">
+                          <HTAIDeposit />
                         </div>
                       </HighlighterItem>
                     </div>
@@ -106,16 +84,6 @@ import Stats from './Stats.vue'
 import HTAIProgress from './HTAIProgress.vue'
 import Highlighter from './Highlighter.vue'
 import HighlighterItem from './HighlighterItem.vue'
-
-// export default {
-//   name: 'JoinHero',
-//   components: {
-//     Particles,
-//     Stats,
-//     HTAIProgress,
-//     Highlighter,
-//     HighlighterItem
-//   },  
-// }
+import HTAIDeposit from './HTAIDeposit.vue'
 
 </script>

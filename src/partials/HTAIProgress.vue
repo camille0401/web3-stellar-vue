@@ -61,7 +61,7 @@ const percentHandle = () => {
             if (percentage.value >= 98) {
                 step = 0.0001;
             }
-            percentage.value = Big(percentage.value).plus(Big(step));
+            percentage.value = new Big(percentage.value).plus(new Big(step));
             step = range[(parseInt((percentage.value / 10).toString()) * 10).toString()];
         }
     }, frequency)
