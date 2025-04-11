@@ -43,7 +43,8 @@
                             <!-- Text -->
                             <div class="md:max-w-[480px] shrink-0 order-1 md:order-none p-6 pt-0 md:p-8">
                               <div>
-                                <p class="text-slate-400">募集资金5M，Healtrace AI只接收以下5条链上的USDT进行存款，单次最小支付金额为100USDT，没有上线。
+                                <p class="text-slate-400">Healtrace AI募集总资金5M，只接收Ethereum、BNB Smart Chain、Base、Arbiturm One
+                                  4条链上的USDT进行存款，单次最小支付金额为100USDT，存款没有上线。
                                 </p>
                               </div>
                             </div>

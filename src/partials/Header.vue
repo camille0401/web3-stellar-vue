@@ -121,8 +121,13 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" class="mr-2">
                   <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
                     stroke-width="2">
-                    <circle cx="8" cy="4" r="3"></circle>
-                    <path d="M1 14c0-4.5 3.5-6 7-6s7 1.5 7 6"></path>
+                    <path
+                      d="M3 5C3 3.343 4.343 2 6 2H14C15.657 2 17 3.343 17 5V11C17 12.657 15.657 14 14 14H6C4.343 14 3 12.657 3 11V5Z">
+                    </path>
+                    <path
+                      d="M12 10C12.552 10 13 9.552 13 9C13 8.448 12.552 8 12 8C11.448 8 11 8.448 11 9C11 9.552 11.448 10 12 10Z">
+                    </path>
+                    <path d="M3 5H12C13.657 5 15 6.343 15 8V10C15 11.657 13.657 13 12 13H3"></path>
                   </g>
                 </svg>
                 <span class="mr-2">{{ walletAddress }}</span>
@@ -133,7 +138,7 @@
               </a>
               <div
                 class="dropdown-content border border-transparent [background:linear-gradient(var(--color-slate-900),var(--color-slate-900))_padding-box,conic-gradient(var(--color-slate-400),var(--color-slate-700)_25%,var(--color-slate-700)_75%,var(--color-slate-400)_100%)_border-box] rounded-lg px-4 py-1.5">
-                <a href="javascript:;"
+                <a href="javascript:;" @click="disConnectWallet"
                   class="flex items-center justify-between font-medium text-sm text-slate-300 hover:text-white transition duration-150 ease-in-out">
                   <span class="mr-4">{{ $t("global.wallet_disconnect") }}</span>
                   <span
@@ -222,9 +227,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ethers } from "ethers";
 
-
-
-
 const LANGMAP = {
   zhCN: "CN",
   en: "EN"
@@ -258,6 +260,7 @@ export default {
     }
 
     const walletAddress = ref(localStorage.getItem('walletAddress') || null);
+
     const connectWallet = async () => {
       if (window.ethereum) {
         try {
@@ -267,15 +270,12 @@ export default {
           walletAddress.value = `${address.slice(0, 4)}...${address.slice(-4)}`;
           localStorage.setItem('walletAddress', walletAddress.value);
         } catch (error) {
-          console.error("连接钱包失败", error);
+          console.error("connect error", error);
         }
-      } else {
-        alert("请安装 MetaMask 钱包插件");
       }
     }
 
-
-    window.ethereum?.on('accountsChanged', (accounts) => {
+    const handleAccountsChanged = (accounts) => {
       if (accounts.length === 0) {
         walletAddress.value = null;
         localStorage.removeItem('walletAddress');
@@ -283,7 +283,32 @@ export default {
         walletAddress.value = `${accounts[0].slice(0, 4)}...${accounts[0].slice(-4)}`;
         localStorage.setItem('walletAddress', walletAddress.value);
       }
-    });
+    }
+
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+    }
+
+    const disConnectWallet = async () => {
+      if (window.ethereum) {
+        try {
+          localStorage.removeItem('walletAddress');
+          walletAddress.value = null;
+
+          await window.ethereum.request({
+            "method": "wallet_revokePermissions",
+            "params": [
+              {
+                eth_accounts: {}
+              }
+            ],
+          });
+
+        } catch (error) {
+          console.error("disconnect error", error);
+        }
+      }
+    }
 
     onMounted(() => {
       document.addEventListener('click', clickHandler)
@@ -291,6 +316,7 @@ export default {
     })
 
     onUnmounted(() => {
+      window.ethereum?.removeListener('accountsChanged', handleAccountsChanged);
       document.removeEventListener('click', clickHandler)
       document.removeEventListener('keydown', keyHandler)
     })
@@ -302,11 +328,14 @@ export default {
       lang,
       langHandler,
       connectWallet,
-      walletAddress
+      walletAddress,
+      disConnectWallet
     }
   }
 }
 </script>
+
+
 <style lang="css" scoped>
 .web-dropdown {
   position: relative;

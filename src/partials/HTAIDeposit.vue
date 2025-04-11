@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 gap-4">
         <div class="htai-netlist-box w-full m-auto">
             <div class="htai-net-btn flex justify-center items-center mb-2" @click="showNetList = true">
-                <img :src="selectNet" class="w-[100%] h-[100%] mr-2" alt="">
+                <img :src="selectNet" class=" h-[80%] mr-2" alt="">
                 <span
                     class="material-symbols-outlined tracking-normal text-lg text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out">
                     stat_minus_1
@@ -48,26 +48,26 @@
                 </div>
             </div>
         </div>
-        <button class="button w-full p-2 rounded-md bg-purple-500 cursor-pointer" @click="onDeposit">deposit</button>
+        <button class="button w-full p-2 rounded-md bg-purple-500 cursor-pointer disabled" @click="onDeposit">SOON</button>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import Big from 'big.js'
-console.log(Big)
 const netList = [
-    "https://assets.pcswap.org/web/chains/svg/56-l.svg",
     "https://assets.pcswap.org/web/chains/svg/1-l.svg",
+    "https://assets.pcswap.org/web/chains/svg/56-l.svg",
     "https://assets.pcswap.org/web/chains/svg/8453-l.svg",
     "https://assets.pcswap.org/web/chains/svg/42161-l.svg",
-    "https://assets.pcswap.org/web/chains/svg/324-l.svg",
-    "https://assets.pcswap.org/web/chains/svg/59144-l.svg",
-    "https://assets.pcswap.org/web/chains/svg/1101-l.svg",
-    "https://assets.pcswap.org/web/chains/svg/aptos-l.svg",
-    "https://assets.pcswap.org/web/chains/svg/204-l.svg"
+ 
 ]
 
+// "https://assets.pcswap.org/web/chains/svg/324-l.svg",
+//     "https://assets.pcswap.org/web/chains/svg/59144-l.svg",
+//     "https://assets.pcswap.org/web/chains/svg/1101-l.svg",
+//     "https://assets.pcswap.org/web/chains/svg/aptos-l.svg",
+//     "https://assets.pcswap.org/web/chains/svg/204-l.svg"
 const selectNet = ref(netList[0])
 const showNetList = ref(false)
 const onSelectNet = (ind) => {
@@ -123,7 +123,6 @@ const onDeposit = () => {
     top: 100%;
     left: 0;
     transition: all 1s ease-in-out;
-    height: 550px;
     min-width: 100%;
 }
 
