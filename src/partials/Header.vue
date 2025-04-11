@@ -130,7 +130,7 @@
                     <path d="M3 5H12C13.657 5 15 6.343 15 8V10C15 11.657 13.657 13 12 13H3"></path>
                   </g>
                 </svg>
-                <span class="mr-2">{{ walletAddress }}</span>
+                <span class="mr-2">{{ walletAddress.slice(0, 4) + "..." + walletAddress.slice(-4) }}</span>
                 <span
                   class="material-symbols-outlined tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out">
                   stat_minus_1
@@ -266,8 +266,7 @@ export default {
         try {
           const provider = new ethers.BrowserProvider(window.ethereum);
           const accounts = await provider.send("eth_requestAccounts", []);
-          let address = accounts[0];
-          walletAddress.value = `${address.slice(0, 4)}...${address.slice(-4)}`;
+          walletAddress.value = accounts[0];
           localStorage.setItem('walletAddress', walletAddress.value);
         } catch (error) {
           console.error("connect error", error);
@@ -280,7 +279,7 @@ export default {
         walletAddress.value = null;
         localStorage.removeItem('walletAddress');
       } else {
-        walletAddress.value = `${accounts[0].slice(0, 4)}...${accounts[0].slice(-4)}`;
+        walletAddress.value = accounts[0];
         localStorage.setItem('walletAddress', walletAddress.value);
       }
     }
@@ -294,7 +293,6 @@ export default {
         try {
           localStorage.removeItem('walletAddress');
           walletAddress.value = null;
-
           await window.ethereum.request({
             "method": "wallet_revokePermissions",
             "params": [

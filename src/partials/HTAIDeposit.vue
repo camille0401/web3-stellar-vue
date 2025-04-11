@@ -53,14 +53,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Big from 'big.js'
+<<<<<<< HEAD
+=======
+import { ethers } from 'ethers'
+import { useToast } from 'vue-toast-notification';
+const toast = useToast();
+>>>>>>> 1cbf9603be6cdafe0bf9c556d89a3b762bc48d19
 const netList = [
     "https://assets.pcswap.org/web/chains/svg/1-l.svg",
     "https://assets.pcswap.org/web/chains/svg/56-l.svg",
     "https://assets.pcswap.org/web/chains/svg/8453-l.svg",
     "https://assets.pcswap.org/web/chains/svg/42161-l.svg",
+<<<<<<< HEAD
  
+=======
+    // "https://assets.pcswap.org/web/chains/svg/324-l.svg",
+    // "https://assets.pcswap.org/web/chains/svg/59144-l.svg",
+    // "https://assets.pcswap.org/web/chains/svg/1101-l.svg",
+    // "https://assets.pcswap.org/web/chains/svg/aptos-l.svg",
+    // "https://assets.pcswap.org/web/chains/svg/204-l.svg"
+>>>>>>> 1cbf9603be6cdafe0bf9c556d89a3b762bc48d19
 ]
 
 // "https://assets.pcswap.org/web/chains/svg/324-l.svg",
@@ -74,7 +88,9 @@ const onSelectNet = (ind) => {
     selectNet.value = netList[ind];
     showNetList.value = false;
 }
-const balance = ref("10")
+
+const balance = ref("0")
+let intervalId = null
 const inputValue = ref('0')
 const handleInput = (event) => {
     const value = event.target.value
@@ -101,13 +117,120 @@ const onSelectCount = (percentage) => {
     inputValue.value = value;
 }
 
-const onDeposit = () => {
-    if (!inputValue.value) {
-        return false;
-    }
+const walletAddress = ref(localStorage.getItem('walletAddress') || null);
 
 
+const chainUsdtAddressMap = {
+    1: '0xdAC17F958D2ee523a2206206994597C13D831ec7',       // Ethereum
+    56: '0x55d398326f99059fF775485246999027B3197955',      // BSC
+    42161: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9',    // Arbitrum
+    8453: '0xd9aa7a7f7d22d97db1b9c208fe93888158e7e8f4',     // Base
 }
+
+
+// Check if the wallet is connected
+const checkWalletConnection = async () => {
+    if (!window.ethereum) return
+    const accounts = await window.ethereum.request({ method: 'eth_accounts' })
+    if (accounts.length > 0) {
+        walletAddress.value = accounts[0] // Wallet is connected, set wallet address
+        // Get the current network's chain ID
+        const chainId = await getChainId()
+        // Fetch USDT balance for the current network
+        balance.value = await getUSDTBalance(chainId)
+        if (balance !== null) {
+            console.log(`USDT balance on chain ${chainId}: ${balance}`)
+        }
+
+    }
+}
+
+// Connect the wallet
+const connectWallet = async () => {
+    if (window.ethereum) {
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+            walletAddress.value = accounts[0] // Set the wallet address after successful connection
+            // Get the current network's chain ID
+            const chainId = await getChainId()
+            // Log the current chain ID
+            console.log('Current Chain ID:', chainId)
+            // Fetch USDT balance for the current network
+            balance.value = await getUSDTBalance(chainId)
+            if (balance !== null) {
+                console.log(`USDT balance on chain ${chainId}: ${balance}`)
+            }
+            toast.success('Wallet connected successfully!', { position: 'top-right' })
+        } catch (error) {
+            toast.error('Failed to connect wallet, please try again', { position: 'top-right' })
+            return false
+        }
+    } else {
+        toast.error('Please install MetaMask or another supported browser wallet', { position: 'top-right' })
+        return false
+    }
+    return true
+}
+
+// Get the current network's chain ID
+const getChainId = async () => {
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    const chain = await provider.getNetwork()
+    return Number(chain.chainId)
+}
+
+// Fetch the USDT balance from a specific network (BSC, ERC-20, Arbitrum, or Base)
+const getUSDTBalance = async (chainId) => {
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    if (!provider) {
+        toast.error('Unsupported chain', { position: 'top-right' })
+        return null
+    }
+    const signer = await provider.getSigner()
+
+    const usdtABI = [
+        "function balanceOf(address owner) view returns (uint256)"
+    ]
+    const usdtContract = new ethers.Contract(chainUsdtAddressMap[chainId], usdtABI, signer)
+    const balance = await usdtContract.balanceOf(walletAddress.value)
+    return ethers.formatUnits(balance, 6); // USDT uses 6 decimal places
+}
+
+// Main method to handle deposit logic, checking wallet, fetching chain info, and balance
+const onDeposit = async () => {
+    // First, check if the wallet is connected
+    await checkWalletConnection()
+    // Ensure wallet address is available
+    if (!walletAddress.value) {
+        // If wallet is not connected, request to connect
+        const connected = await connectWallet()
+        if (!connected) {
+            return
+        }
+    }
+    // Get the current network's chain ID
+    const chainId = await getChainId()
+    // Log the current chain ID
+    console.log('Current Chain ID:', chainId)
+    // Fetch USDT balance for the current network
+    balance.value = await getUSDTBalance(chainId)
+    if (balance !== null) {
+        console.log(`USDT balance on chain ${chainId}: ${balance}`)
+    }
+}
+
+onMounted(() => {
+    checkWalletConnection()
+    intervalId = setInterval(checkWalletConnection, 3000) // 每 10 秒检查一次
+})
+
+onBeforeUnmount(() => {
+    if (intervalId) clearInterval(intervalId)
+})
+
+
+
+
 
 </script>
 
