@@ -17,9 +17,9 @@
         <img src="../images/page-illustration.svg" class="max-w-none" width="1440" height="427" alt="Page Illustration">
       </div>
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="pt-32 pb-20 md:pt-40 md:pb-24">
+        <div class="pt-32 pb-20 md:pt-40 md:pb-24" style="padding-bottom: 10px;">
           <!-- Section header -->
-          <div class="text-center pb-12 md:pb-20">
+          <div class="text-center pb-12 md:pb-20" style="padding-bottom: 10px;">
             <div
               class="inline-flex font-medium bg-clip-text text-transparent bg-linear-to-r from-purple-500 to-purple-200 pb-3">
               {{ $t("join.title1") }}</div>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="max-w-6xl mx-auto px-4 sm:px-6">
-              <div class="pt-16 md:pt-32">
+              <div class="pt-16 md:pt-32" style="padding-top: 60px">
                 <div class="relative pb-12 md:pb-20">
                   <Highlighter class="grid md:grid-cols-12 gap-6 group">
                     <!-- Box #2 -->
@@ -43,8 +43,7 @@
                             <!-- Text -->
                             <div class="md:max-w-[480px] shrink-0 order-1 md:order-none p-6 pt-0 md:p-8">
                               <div>
-                                <p class="text-slate-400">Healtrace AI募集总资金5M，只接收Ethereum、BNB Smart Chain、Base、Arbiturm One
-                                  4条链上的USDT进行存款，单次最小支付金额为100USDT，存款没有上线。
+                                <p class="text-slate-400">{{ $t("join.saleTips") }}
                                 </p>
                               </div>
                             </div>

@@ -48,33 +48,28 @@
                 </div>
             </div>
         </div>
-        <button class="button w-full p-2 rounded-md bg-purple-500 cursor-pointer disabled" @click="onDeposit">SOON</button>
+        <button class="button w-full p-2 rounded-md bg-purple-500 cursor-pointer disabled" @click="onDeposit">{{ $t("join.button") }}</button>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Big from 'big.js'
-<<<<<<< HEAD
-=======
+
 import { ethers } from 'ethers'
 import { useToast } from 'vue-toast-notification';
 const toast = useToast();
->>>>>>> 1cbf9603be6cdafe0bf9c556d89a3b762bc48d19
+
 const netList = [
     "https://assets.pcswap.org/web/chains/svg/1-l.svg",
     "https://assets.pcswap.org/web/chains/svg/56-l.svg",
     "https://assets.pcswap.org/web/chains/svg/8453-l.svg",
     "https://assets.pcswap.org/web/chains/svg/42161-l.svg",
-<<<<<<< HEAD
- 
-=======
     // "https://assets.pcswap.org/web/chains/svg/324-l.svg",
     // "https://assets.pcswap.org/web/chains/svg/59144-l.svg",
     // "https://assets.pcswap.org/web/chains/svg/1101-l.svg",
     // "https://assets.pcswap.org/web/chains/svg/aptos-l.svg",
     // "https://assets.pcswap.org/web/chains/svg/204-l.svg"
->>>>>>> 1cbf9603be6cdafe0bf9c556d89a3b762bc48d19
 ]
 
 // "https://assets.pcswap.org/web/chains/svg/324-l.svg",

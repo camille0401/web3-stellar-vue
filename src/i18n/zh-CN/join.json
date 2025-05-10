@@ -5,5 +5,6 @@
     "module2":"HealTrace AI公募已经筹集到的资金",
     "module3":"参与 HealTrace AI 公募的钱包数",
     "module4":"当前钱包参与的金额",
-    "button":"未开始"
+    "button":"未开始",
+    "saleTips":"Healtrace AI募集总资金5M，只接收Ethereum、BNB Smart Chain、Base、Arbiturm One 4条链上的USDT进行存款，单次最小支付金额为100USDT，存款没有上限。"
 }
