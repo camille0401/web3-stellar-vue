@@ -1,10 +1,11 @@
 {
-    "title1":"HealTrace AI's Public Sale",
-    "title2":"Initial Public Sale",
-    "module1": "Total fundraising target of HealTrace AI public sale",
-    "module2": "Funds raised in HealTrace AI public sale",
-    "module3": "Number of wallets participating in HealTrace AI public sale",
-    "module4": "Current wallet's contribution amount",
-    "button":"SOON",
-    "saleTips":"Healtrace AI is raising a total of $5 million in funding. Deposits are only accepted in USDT on four blockchains: Ethereum, BNB Smart Chain, Base, and Arbitrum One. The minimum deposit amount per transaction is 100 USDT, with no upper limit."
+  "title1": "HealTrace AI's Public Sale",
+  "title2": "Initial Public Sale",
+  "module1": "Total fundraising target of HealTrace AI public sale",
+  "module2": "Funds raised in HealTrace AI public sale",
+  "module3": "Number of wallets participating in HealTrace AI public sale",
+  "module4": "Current wallet's contribution amount",
+  "button": "At least {usdc} USDC",
+  "saleTips": "Healtrace AI is raising a total of ${amount}M in funding. Deposits are only accepted in USDC on four blockchains: Ethereum, BNB Smart Chain, Base, and Arbitrum One. The minimum deposit amount per transaction is {usdc} USDC, with no upper limit.",
+  "balanceTip": "Insufficient USDC balance"
 }

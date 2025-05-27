@@ -43,7 +43,7 @@
                             <!-- Text -->
                             <div class="md:max-w-[480px] shrink-0 order-1 md:order-none p-6 pt-0 md:p-8">
                               <div>
-                                <p class="text-slate-400">{{ $t("join.saleTips") }}
+                                <p class="text-slate-400">{{ $t("join.saleTips",{usdc:config.MIN_TRANSFER_AMOUNT,amount:config.TOTAL_AMOUNT_UNIT}) }}
                                 </p>
                               </div>
                             </div>
@@ -85,5 +85,7 @@ import HTAIProgress from './HTAIProgress.vue'
 import Highlighter from './Highlighter.vue'
 import HighlighterItem from './HighlighterItem.vue'
 import HTAIDeposit from './HTAIDeposit.vue'
+import config from '../constants/config';
+
 
 </script>

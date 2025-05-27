@@ -49,7 +49,7 @@
                   <ul class="flex">
                     <li>
                       <a class="flex justify-center items-center text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out"
-                      href="https://x.com/healtraceAI" target="_blank" aria-label="Twitter">
+                        href="https://x.com/healtraceAI" target="_blank" aria-label="Twitter">
                         <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="m13.063 9 3.495 4.475L20.601 9h2.454l-5.359 5.931L24 23h-4.938l-3.866-4.893L10.771 23H8.316l5.735-6.342L8 9h5.063Zm-.74 1.347h-1.457l8.875 11.232h1.36l-8.778-11.232Z" />
@@ -58,7 +58,7 @@
                     </li>
                     <li class="ml-2">
                       <a class="flex justify-center items-center text-purple-500 hover:text-purple-400 transition duration-150 ease-in-out"
-                      href="https://t.me/HealTraceAi" target="_blank" aria-label="Dev.to">
+                        href="https://t.me/HealTraceAi" target="_blank" aria-label="Dev.to">
                         <svg class="w-8 h-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                           <path
                             d="M16 0C7.164 0 0 7.163 0 16s7.164 16 16 16 16-7.163 16-16S24.836 0 16 0zm6.595 10.728-2.2 10.4c-.166.75-.623.93-1.263.578l-3.49-2.58-1.662 1.6c-.183.178-.336.328-.687.328l.247-3.455 6.291-5.686c.274-.244-.06-.381-.425-.137L10.74 17.48l-3.4-1.062c-.74-.23-.756-.74.157-1.097l13.522-5.213c.622-.24 1.16.159.923 1.62z"
@@ -226,9 +226,11 @@
 </template>
 
 <script>
+import config from '../constants/config';
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ethers } from "ethers";
+import { useAppStore } from '../stores/app'
 
 const LANGMAP = {
   zhCN: "CN",
@@ -239,6 +241,7 @@ export default {
   name: 'Header',
   setup() {
 
+    const appStore = useAppStore();
     const lang = ref(LANGMAP["en"])
     const I18n = useI18n()
     const langHandler = (target) => {
@@ -271,10 +274,26 @@ export default {
           const accounts = await provider.send("eth_requestAccounts", []);
           walletAddress.value = accounts[0];
           localStorage.setItem('walletAddress', walletAddress.value);
+          const chainid = getChainId();
+          if (chainid !== config.CHAIN_LIST[0].hex) {
+            await window.ethereum.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: config.CHAIN_LIST[0].hex }],
+            })
+          }
+          appStore.notify();
         } catch (error) {
           console.error("connect error", error);
+          throw error
         }
       }
+    }
+
+    // Get the current network's chain ID
+    const getChainId = async () => {
+      const provider = new ethers.BrowserProvider(window.ethereum)
+      const chain = await provider.getNetwork()
+      return Number(chain.chainId)
     }
 
     const handleAccountsChanged = (accounts) => {
@@ -284,6 +303,7 @@ export default {
       } else {
         walletAddress.value = accounts[0];
         localStorage.setItem('walletAddress', walletAddress.value);
+        appStore.notify();
       }
     }
 

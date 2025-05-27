@@ -4,88 +4,25 @@
             <div class="flex justify-between gap-10 mb-2">
                 <span class="font-medium text-zinc-500">Total Minted</span>
                 <div>
-                    <span class="font-medium text-slate-300">{{ percentage }}%</span>
-                    <span class="font-medium text-zinc-500">&nbsp;({{ percentage }} / 5000000)</span>
+                    <span class="font-medium text-slate-300">{{ translog.percentage }}%</span>
+                    <span class="font-medium text-zinc-500">&nbsp;({{ translog.trans_amount }} / {{ config.TOTAL_AMOUNT }})</span>
                 </div>
             </div>
             <div class="htaiprogress">
-                <div class="htaiprogress-bar" :style="{ 'width': `${percentage}%` }"></div>
+                <div class="htaiprogress-bar" :style="{ 'width': `${translog.percentage}%` }"></div>
             </div>
         </div>
-        <!-- <div class="htaiprogress-aside">
-            <button class="btn text-slate-900 bg-linear-to-r from-white/80 via-white to-white/80 hover:bg-white w-full transition duration-150 ease-in-out group"
-            disabled>
-                {{ $t("join.button") }}
-                <span
-                    class="tracking-normal text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span>
-            </button>
-        </div> -->
     </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
-import Big from 'big.js'
-
-const range = {
-    0: 6,
-    10: 5,
-    20: 4,
-    30: 3,
-    40: 2,
-    50: 1,
-    60: 0.5,
-    70: 0.1,
-    80: 0.05,
-    90: 0.01,
-};
-const percentage = ref(0);
-const initStep = 5;
-const frequency = 1000;
-let step = initStep;
-let timer = null;
-
-const percentHandle = () => {
-    timer = setInterval(() => {
-        if (percentage.value >= 100) {
-            percentage.value = 100;
-            step = initStep;
-            if (timer) {
-                clearTimeout(timer)
-                timer = null
-            }
-        } else {
-            if (percentage.value >= 95) {
-                step = 0.001;
-            }
-            if (percentage.value >= 98) {
-                step = 0.0001;
-            }
-            percentage.value = new Big(percentage.value).plus(new Big(step));
-            step = range[(parseInt((percentage.value / 10).toString()) * 10).toString()];
-        }
-    }, frequency)
-}
-
-// onMounted(() => percentHandle())
-
-onUnmounted(() => {
-    if (timer) {
-        clearTimeout(timer)
-        timer = null
-    }
-})
+import config from '../constants/config';
+import translog from "../../public/walletbalance.json"
 
 </script>
 
 <style>
-.htaiprogress-container {
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
-    /* column-gap: 20px; */
-    /* width: 100%; */
-}
+
 
 .htaiprogress-main {
     flex: 1;

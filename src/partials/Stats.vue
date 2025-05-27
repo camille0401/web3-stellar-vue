@@ -1,33 +1,57 @@
 <script setup>
-import { ref } from 'vue'
-import Counter from './Counter.vue'
 
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import Counter from './Counter.vue'
+import config from '../constants/config';
+import translog from "../../public/translog.json"
+import balance from "../../public/walletbalance.json"
+
+
+const wallettrans = ref(0)
 const stats = ref([
   {
-    number: 5,
+    number: config.TOTAL_AMOUNT_UNIT,
     suffix: 'M',
     text: 'join.module1',
     preffix: '$',
   },
   {
-    number: 0,
+    number: balance.trans_amount,
     suffix: '',
     text: 'join.module2',
     preffix: '$',
   },
   {
-    number: 0,
+    number: translog.trans_wallat_address.length,
     suffix: '',
     text: 'join.module3',
     preffix: '',
   },
   {
-    number: 0,
+    number: wallettrans,
     suffix: '',
     text: 'join.module4',
     preffix: '$',
   },
 ])
+
+
+
+const getTransInfo = ()=>{
+// Get the wallet address from localStorage
+const targetWallet = localStorage.getItem('walletAddress');
+// Use a ternary expression to determine the value
+wallettrans.value = targetWallet && targetWallet.trim()
+    ? (translog.trans_wallat_address.find(entry => entry.wallet === targetWallet)?.value ?? 0)
+    : 0;
+  
+}
+
+onMounted(() => {
+    getTransInfo();
+})
+
+
 </script>
 
 <template>
