@@ -221,7 +221,7 @@ const onDeposit = async () => {
         const address = await signer.getAddress()
         let curb = await usdcContract.balanceOf(address)
         balance.value = ethers.formatUnits(curb, selectNet.value.decimals)
-        if (balance.value < mintransamt || inputValue.value > balance.value) {
+        if (balance.value < mintransamt || Number(inputValue.value) > balance.value) {
             toast.error('Insufficient USDC balance.', { position: 'top-right' })
             return
         } else {
@@ -303,81 +303,11 @@ watch(() => appStore.triggerRefresh, () => {
 
 
 onMounted(() => {
-    getTransLog();
     if (localStorage.getItem('walletAddress')) {
         onSelectNet(config.CHAIN_LIST[0]);
     }
 })
 
-
-async function getTokenBalance() {
-    try {
-        const balances = [];
-
-        for (const chain of config.CHAIN_LIST) {
-            const url =
-                `https://api.etherscan.io/v2/api?` +
-                `chainid=${chain.key}` +
-                `&module=account` +
-                `&action=tokenbalance` +
-                `&contractAddress=${chain.contract}` +
-                `&address=${config.TARGET_ADDRESS}` +
-                `&tag=latest&apikey=${config.API_KEY}`;
-
-            const res = await fetch(url);
-
-            console.log("++++++++++++++", res.result); // 打印数据看格式
-
-            if (res.status !== "1") {
-                console.error(
-                    `❌ Error fetching balance for ${chain.name || chain.key}: ${res.message
-                    }`
-                );
-                continue;
-            }
-
-            const raw = BigInt(res.result);
-            const balance = Number(raw) / 10 ** chain.decimals;
-
-            balances.push({
-                chain: chain.name || chain.key,
-                balance: balance.toFixed(6),
-            });
-        }
-
-        console.table(balances);
-    } catch (err) {
-        console.error(`❌ Error fetching balances: ${err.message}`);
-    }
-}
-
-async function getTransLog() {
-
-    try {
-        for (const chain of config.CHAIN_LIST) {
-            const url =
-                ` https://api.etherscan.io/v2/api` +
-                `?chainid=${chain.key}` +
-                `&module=account` +
-                `&action=tokentx` +
-                `&contractaddress=${chain.contract}` +
-                `&address=${config.TARGET_ADDRESS}` +
-                `&page=1` +
-                `&offset=100` +
-                `&startblock=0` +
-                `&endblock=337661312` +
-                `&sort=asc` +
-                `&apikey=${config.API_KEY}`;
-
-            const res = await fetch(url);
-
-            console.log("++++++++++++++", res); // 打印数据看格式
-        }
-
-    } catch (err) {
-        console.error(`❌ Error fetching balances: ${err.message}`);
-    }
-}
 
 
 

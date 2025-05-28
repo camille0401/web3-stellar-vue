@@ -4,12 +4,13 @@
             <div class="flex justify-between gap-10 mb-2">
                 <span class="font-medium text-zinc-500">Total Minted</span>
                 <div>
-                    <span class="font-medium text-slate-300">{{ translog.percentage }}%</span>
-                    <span class="font-medium text-zinc-500">&nbsp;({{ translog.trans_amount }} / {{ config.TOTAL_AMOUNT }})</span>
+                    <span class="font-medium text-slate-300">{{ balance.percent }}%</span>
+                    <span class="font-medium text-zinc-500">&nbsp;({{ balance.total_balance }} / {{ config.TOTAL_AMOUNT
+                        }})</span>
                 </div>
             </div>
             <div class="htaiprogress">
-                <div class="htaiprogress-bar" :style="{ 'width': `${translog.percentage}%` }"></div>
+                <div class="htaiprogress-bar" :style="{ 'width': `${balance.percent}%` }"></div>
             </div>
         </div>
     </div>
@@ -17,13 +18,36 @@
 
 <script setup>
 import config from '../constants/config';
-import translog from "../../public/walletbalance.json"
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import axios from 'axios'
+
+const balance = ref({ total_balance: 0, percent: 0, wallet_count: 0 })
+let timer = null
+const getBanlanceInfo = async () => {
+    // Use a ternary expression to determine the value
+    const res = await axios.get(`https://api.healtrace.xyz/balance/total`)
+    if (res.data.flag === 1) {
+        if (res.data.data) {
+            balance.value = res.data.data;
+        }
+    }
+}
+
+onMounted(() => {
+    getBanlanceInfo();
+    timer = setInterval(getBanlanceInfo, 30000) // 每 30 秒刷新一次
+})
+
+onUnmounted(() => {
+  if (timer) {
+    clearInterval(timer)
+    timer = null
+  }
+})
 
 </script>
 
 <style>
-
-
 .htaiprogress-main {
     flex: 1;
 }

@@ -111,7 +111,7 @@
 
 <script>
 import Particles from './Particles.vue'
-import IntegrationsCarousel from './IntegrationsCarousel.vue'
+// import IntegrationsCarousel from './IntegrationsCarousel.vue'
 import Highlighter from './Highlighter.vue'
 import HighlighterItem from './HighlighterItem.vue'
 
@@ -119,7 +119,7 @@ export default {
   name: 'IntegrationsHero',
   components: {
     Particles,
-    IntegrationsCarousel,
+    // IntegrationsCarousel,
     Highlighter,
     HighlighterItem
   },
