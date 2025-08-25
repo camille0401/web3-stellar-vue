@@ -5,7 +5,7 @@
   "module2": "Funds raised in HealTrace AI public sale",
   "module3": "Number of wallets participating in HealTrace AI public sale",
   "module4": "Current wallet's contribution amount",
-  "button": "At least {usdc} USDC",
-  "saleTips": "Healtrace AI is raising a total of ${amount}M in funding. Deposits are only accepted in USDC on four blockchains: Ethereum, BNB Smart Chain, Base, and Arbitrum One. The minimum deposit amount per transaction is {usdc} USDC, with no upper limit.",
-  "balanceTip": "Insufficient USDC balance"
+  "button": "At least {usdc} BNB",
+  "saleTips": "In the first round of launch, you can choose 0.1-3 BNB. Please note that you should stay calm and don’t get emotional. If you exceed the limit, you will be refunded and will not be able to participate in the first round of fair launch.",
+  "balanceTip": "Insufficient BNB balance"
 }

@@ -16,15 +16,15 @@ const appStore = useAppStore()
 const stats = computed(() => [
   {
     number: config.TOTAL_AMOUNT_UNIT,
-    suffix: 'M',
+    suffix: ' BNB',
     text: 'join.module1',
-    preffix: '$',
+    preffix: '',
   },
   {
     number: balance.value.total_balance,
-    suffix: '',
+    suffix: ' BNB',
     text: 'join.module2',
-    preffix: '$',
+    preffix: '',
   },
   {
     number: balance.value.wallet_count,
@@ -34,9 +34,9 @@ const stats = computed(() => [
   },
   {
     number: wallettrans.value,
-    suffix: '',
+    suffix: ' BNB',
     text: 'join.module4',
-    preffix: '$',
+    preffix: '',
   },
 ])
 
@@ -50,7 +50,7 @@ const getTransInfo = async () => {
   const targetWallet = localStorage.getItem('walletAddress');
   // Use a ternary expression to determine the value
   if (targetWallet) {
-    const res = await axios.get(`https://api.healtrace.xyz/logs/wallet`, {
+    const res = await axios.get(`${config.API_BASE_URL}/logs/wallet`, {
       params: { address: targetWallet }
     })
     if (res.data.flag === 1) {
@@ -66,7 +66,7 @@ const getTransInfo = async () => {
 
 const getBanlanceInfo = async () => {
   // Use a ternary expression to determine the value
-  const res = await axios.get(`https://api.healtrace.xyz/balance/total`)
+  const res = await axios.get(`${config.API_BASE_URL}/balance/total`)
   if (res.data.flag === 1) {
     if (res.data.data) {
       balance.value = res.data.data;

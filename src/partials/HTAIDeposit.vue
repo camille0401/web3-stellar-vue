@@ -1,31 +1,18 @@
 <template>
     <div class="grid grid-cols-1 gap-4">
-        <div class="htai-netlist-box w-full m-auto">
-            <div class="htai-net-btn flex justify-center items-center mb-2" @click="showNetList = true">
-                <img :src="selectNet.value" class=" h-[30px] mr-2" alt="">
-                <div class="sc-1e14ff52-0 dSGEhO">{{ selectNet.name }}</div>
-                <span
-                    class="material-symbols-outlined tracking-normal text-lg text-purple-500 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out">
-                    stat_minus_1
-                </span>
+        <div class="w-full m-auto">
+            <div class="flex justify-center items-center mb-2">
+                <img :src="config.CHAIN_LIST[0].value" class="h-[30px] mr-2" alt="">
+                <div class="sc-1e14ff52-0 dSGEhO">{{ config.CHAIN_LIST[0].name }}</div>
             </div>
-            <ul v-show="showNetList" class="htai-netlist w-[280px] grid grid-cols-1 gap-2 bg-[#27262c] rounded-lg">
-                <li class="w-full flex p-2 border-b border-solid border-zinc-500 text-left">Select a
-                    Network</li>
-                <li v-for="netItem in netList" :key="netItem.key"
-                    class="w-full flex p-2 hover:bg-purple-500 cursor-pointer" @click="onSelectNet(netItem)">
-                    <img :src="netItem.value" alt="" class="h-[30px]">
-                    <div class="sc-1e14ff52-0 dSGEhO">{{ netItem.name }}</div>
-                </li>
-            </ul>
         </div>
         <p class="inline-flex font-medium bg-clip-text text-transparent bg-linear-to-r from-purple-500 to-purple-200">
             Deposit Amount
         </p>
         <div class="flex justify-between">
             <div class="flex gap-2">
-                <img src="../images/chain/usdc_ofc_32.svg" width="24" height="24" style="border-radius: 50%;">
-                <span class="font-medium">USDC</span>
+                <img src="https://assets.pcswap.org/web/chains/56.png" width="24" height="24" style="border-radius: 50%;">
+                <span class="font-medium">BNB</span>
             </div>
             <div class="text-zinc-500">
                 <span>Balance: </span>
@@ -86,13 +73,7 @@ import { useAppStore } from '../stores/app';
 const toast = useToast();
 const appStore = useAppStore()
 
-const netList = config.CHAIN_LIST
-
-const selectNet = ref(netList[0])
-
 const walletAddress = ref(localStorage.getItem('walletAddress') || null);
-
-const showNetList = ref(false)
 
 const showDeposit = ref(false)
 
@@ -101,31 +82,29 @@ const loading = ref(false)
 const receiveAddress = config.TARGET_ADDRESS
 
 const mintransamt = config.MIN_TRANSFER_AMOUNT
+const maxtransamt = config.MAX_TRANSFER_AMOUNT
 
 const balance = ref("0")
 
 
-const onSelectNet = async (netItem) => {
-    inputValue.value = 0.0
+const loadBalance = async () => {
     walletAddress.value = localStorage.getItem('walletAddress');
     if (!walletAddress.value) {
         toast.error('Please connect your wallet.', { position: 'top-right' })
         return;
     }
-    selectNet.value = netItem;
-    showNetList.value = false;
 
     let currid = await getChainId()
     console.log(currid)
 
-    if (currid !== netItem.key) {
+    // Check if current chain matches config
+    if (currid !== config.CHAIN_LIST[0].key) {
         await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: netItem.hex }],
+            params: [{ chainId: config.CHAIN_LIST[0].hex }],
         })
     }
-    // Get the current network's chain ID
-    balance.value = await getUSDCBalance(netItem)
+    balance.value = await getBNBBalance()
 }
 
 // Get the current network's chain ID
@@ -136,21 +115,17 @@ const getChainId = async () => {
 }
 
 
-// Fetch the USDC balance from a specific network (BSC, ERC-20, Arbitrum, or Base)
-const getUSDCBalance = async (chain) => {
+// Fetch the BNB balance from the wallet
+const getBNBBalance = async () => {
     const provider = new ethers.BrowserProvider(window.ethereum)
     if (!provider) {
         toast.error('Unsupported chain', { position: 'top-right' })
         return null
     }
-    const signer = await provider.getSigner()
-
-    const usdtABI = [
-        "function balanceOf(address owner) view returns (uint256)"
-    ]
-    const usdtContract = new ethers.Contract(chain.contract, usdtABI, signer)
-    let currb = await usdtContract.balanceOf(walletAddress.value)
-    return ethers.formatUnits(currb, chain.decimals); // USDT uses 6 decimal places
+    
+    const balance = await provider.getBalance(walletAddress.value)
+    const formatted = ethers.formatEther(balance);
+    return parseFloat(formatted).toFixed(2); // Keep 2 decimal places
 }
 
 
@@ -161,7 +136,7 @@ const getUSDCBalance = async (chain) => {
 let intervalId = null
 const inputValue = ref('0')
 
-const handleInput = (event) => {
+const handleInput = async (event) => {
     const value = event.target.value
     let number = value
     const reg = /^(\-)*(\d+)\.(\d+)$/;
@@ -174,18 +149,28 @@ const handleInput = (event) => {
     }
     inputValue.value = number
 
-    if (inputValue.value >= mintransamt) {
+    // Load balance if wallet is connected and input is focused
+    if (localStorage.getItem('walletAddress') && balance.value === "0") {
+        await loadBalance();
+    }
+
+    if (inputValue.value >= mintransamt && inputValue.value <= maxtransamt) {
         showDeposit.value = true;
     } else {
         showDeposit.value = false;
     }
 }
 
-const onSelectCount = (percentage) => {
+const onSelectCount = async (percentage) => {
+    // Load balance if not already loaded
+    if (localStorage.getItem('walletAddress') && balance.value === "0") {
+        await loadBalance();
+    }
+    
     const per = new Big(percentage).div(100);
     const value = new Big(balance.value).times(per).toString();
     inputValue.value = value;
-    if (inputValue.value >= mintransamt) {
+    if (inputValue.value >= mintransamt && inputValue.value <= maxtransamt) {
         showDeposit.value = true;
     } else {
         showDeposit.value = false;
@@ -210,33 +195,35 @@ const onDeposit = async () => {
 
     const signer = await provider.getSigner()
 
-    const usdcABI = [
-        'function balanceOf(address owner) view returns (uint256)',
-        'function transfer(address to, uint256 amount) public returns (bool)'
-    ]
-
-    const usdcContract = new ethers.Contract(selectNet.value.contract, usdcABI, signer)
-
     try {
         const address = await signer.getAddress()
-        let curb = await usdcContract.balanceOf(address)
-        balance.value = ethers.formatUnits(curb, selectNet.value.decimals)
-        if (balance.value < mintransamt || Number(inputValue.value) > balance.value) {
-            toast.error('Insufficient USDC balance.', { position: 'top-right' })
+        let curb = await provider.getBalance(address)
+        const formatted = ethers.formatEther(curb)
+        balance.value = parseFloat(formatted).toFixed(2)
+        if (Number(inputValue.value) > balance.value) {
+            toast.error('Insufficient BNB balance.', { position: 'top-right' })
+            return
+        }
+        
+        if (Number(inputValue.value) < mintransamt || Number(inputValue.value) > maxtransamt) {
+            toast.error(`Amount must be between ${mintransamt} and ${maxtransamt} BNB.`, { position: 'top-right' })
             return
         } else {
             loading.value = true;
         }
 
-        if (inputValue.value < mintransamt) {
+        if (inputValue.value < mintransamt || inputValue.value > maxtransamt) {
             showDeposit.value = false;
             loading.value = false;
             return
         }
 
-        const amount = ethers.parseUnits(inputValue.value, selectNet.value.decimals)
+        const amount = ethers.parseEther(inputValue.value)
 
-        const tx = await usdcContract.transfer(receiveAddress, amount)
+        const tx = await signer.sendTransaction({
+            to: receiveAddress,
+            value: amount
+        })
 
         const toastId = toast.info(`Transaction in progress... Tx: ${tx.hash}`, {
             duration: 5000,
@@ -276,8 +263,9 @@ const onDeposit = async () => {
         }
         loading.value = false;
 
-        curb = await usdcContract.balanceOf(address)
-        balance.value = ethers.formatUnits(curb, selectNet.value.decimals)
+        curb = await provider.getBalance(address)
+        const formattedBalance = ethers.formatEther(curb)
+        balance.value = parseFloat(formattedBalance).toFixed(2)
 
     } catch (error) {
         loading.value = false;
@@ -296,7 +284,7 @@ const onDeposit = async () => {
 
 watch(() => appStore.triggerRefresh, () => {
     if (localStorage.getItem('walletAddress')) {
-        onSelectNet(config.CHAIN_LIST[0]);
+        loadBalance();
     }
 });
 
@@ -304,7 +292,7 @@ watch(() => appStore.triggerRefresh, () => {
 
 onMounted(() => {
     if (localStorage.getItem('walletAddress')) {
-        onSelectNet(config.CHAIN_LIST[0]);
+        loadBalance();
     }
 })
 
@@ -322,19 +310,6 @@ onMounted(() => {
     font-size: 16px;
 }
 
-.htai-netlist-box {
-    position: relative;
-    display: inline-block;
-    z-index: 10;
-}
-
-.htai-netlist {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    transition: all 1s ease-in-out;
-    min-width: 100%;
-}
 
 .htai-deposit-input {
     font-weight: 500;

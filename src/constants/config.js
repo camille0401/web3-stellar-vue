@@ -9,14 +9,14 @@ const config = {
    * - contract: token contract address used on this chain
    */
   CHAIN_LIST: [
-    {
-      key: 11155111,
-      hex: "0xaa36a7",
-      name: "Sepolia Testnet",
-      value: "https://assets.pcswap.org/web/chains/1.png",
-      contract: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-      decimals: 6
-    },
+    // {
+    //   key: 11155111,
+    //   hex: "0xaa36a7",
+    //   name: "Sepolia Testnet",
+    //   value: "https://assets.pcswap.org/web/chains/1.png",
+    //   contract: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+    //   decimals: 6
+    // },
     // {
     //   key: 1,
     //   hex: "0x1",
@@ -25,14 +25,14 @@ const config = {
     //   contract: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     //   decimals: 6
     // },
-    // {
-    //   key: 56,
-    //   hex: "0x38",
-    //   name: "BNB Chain",
-    //   value: "https://assets.pcswap.org/web/chains/56.png",
-    //   contract: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-    //   decimals: 18
-    // },
+    {
+      key: 56,
+      hex: "0x38",
+      name: "BNB Chain",
+      value: "https://assets.pcswap.org/web/chains/56.png",
+      contract: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      decimals: 18
+    },
     // {
     //   key: 42161,
     //   hex: "0xa4b1",
@@ -50,23 +50,27 @@ const config = {
     //   decimals: 6
     // },
   ],
-  TOTAL_AMOUNT: 5000000,
+  TOTAL_AMOUNT: 1000,
 
-  TOTAL_AMOUNT_UNIT: 5,//unit M
+  TOTAL_AMOUNT_UNIT: 1000,//unit M
 
   /**
    * Minimum transferable token amount
    * Used to validate user transfers (e.g. cannot send less than 10 units)
    */
-  MIN_TRANSFER_AMOUNT: 1,
+  MIN_TRANSFER_AMOUNT: 0.1,
+
+  MAX_TRANSFER_AMOUNT: 3,
 
   /**
    * Recipient wallet address
    * All tokens will be transferred to this address
    */
-  TARGET_ADDRESS: "0x311c15a0509b15dcc62881f76e0dcb1f473970fb",
+  TARGET_ADDRESS: "0x29F76ed78943D01b2A0A530fA837aA280b1Cc65E",
 
   // TARGET_ADDRESS: "0xc37b809d3c3378e0c22aaac7693cd0f34f22e2a2",
+
+  API_BASE_URL: 'https://api.healtrace.xyz',
 
   API_KEY:'CCVTEQXZQ49XCYGDKUZ6UDH8KJKNKU6RJK'
 };

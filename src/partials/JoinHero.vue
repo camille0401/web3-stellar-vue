@@ -41,15 +41,15 @@
                           <div class="flex flex-col">
 
                             <!-- Text -->
-                            <div class="md:max-w-[480px] shrink-0 order-1 md:order-none p-6 pt-0 md:p-8">
+                            <div class="md:max-w-[480px] shrink-0 order-1 md:order-none p-4 md:p-6">
                               <div>
                                 <p class="text-slate-400">{{ $t("join.saleTips",{usdc:config.MIN_TRANSFER_AMOUNT,amount:config.TOTAL_AMOUNT_UNIT}) }}
                                 </p>
                               </div>
                             </div>
-                            <!-- Image -->
-                            <div class="relative w-full h-64 md:h-auto md:pb-8">
-                              <div class="max-w-6xl mx-auto px-4 sm:px-6" style="margin-top: 100px;">
+                            <!-- Progress -->
+                            <div class="relative w-full md:pb-4">
+                              <div class="px-4 md:px-6">
                                 <HTAIProgress />
                               </div>
                             </div>
